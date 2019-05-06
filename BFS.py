@@ -14,68 +14,42 @@ def BreadthFirstLevels(G,root):
     The vertices in each level can be listed by iterating over each
     output graph.
     """
-    # visited = set()
-    # currentLevel = [root]
-    # while currentLevel:
-    #     for v in currentLevel:
-    #         visited.add(v)
-    #     nextLevel = set()
-    #     levelGraph = {v:set() for v in currentLevel}
-    #     for v in currentLevel:
-    #         for w in G[v]:
-    #             if w not in visited:
-    #                 levelGraph[v].add(w)
-    #                 nextLevel.add(w)
-    #     print(levelGraph)
-    #     currentLevel = nextLevel
-    visited, queue = set(), collections.deque([root])
-    while queue:
-        vertex = queue.popleft()
-        for neighbour in G[vertex]:
-            if neighbour not in visited:
-                visited.add(neighbour)
-                queue.append(neighbour)
+    visited = set()
+    currentLevel = [root]
+    while currentLevel:
+        for v in currentLevel:
+            visited.add(v)
+        nextLevel = set()
+        levelGraph = {v:set() for v in currentLevel}
+        for v in currentLevel:
+            for w in G[v]:
+                if w not in visited:
+                    levelGraph[v].add(w)
+                    nextLevel.add(w)
+        print(levelGraph)
+        currentLevel = nextLevel
         return nodes
-# def BreadthFirstKLevels(G,root,k):
-#     visited = set()
-#     currentLevel = [root]
-#     level = 0
-#     nodelist = []
-#     while (currentLevel and level<=k):
-#         for v in currentLevel:
-#             visited.add(v)
-#         nextLevel = set()
-#         levelGraph = {v:set() for v in currentLevel}
-#         for v in currentLevel:
-#             for w in G[v]:
-#                 if w not in visited:
-#                     levelGraph[v].add(w)
-#                     nextLevel.add(w)
-#         # yield levelGraph
-#         nodelist = nodelist + list(levelGraph)
-#         level = level + 1
-#         if level==k:
-#             break
-#         currentLevel = nextLevel
-#     return nodelist
-
-
-def BreadthFirstKLevels(G, root, k):
+def BreadthFirstKLevels(G,root,k):
+    visited = set()
+    currentLevel = [root]
     level = 0
     nodelist = []
-    visited, queue = set(), collections.deque([root])
-    while (queue and level <= k):
-        vertex = queue.popleft()
-        for neighbour in G[vertex]:
-            if neighbour not in visited:
-                visited.add(neighbour)
-                queue.append(neighbour)
-        # yield visited
-        nodelist = nodelist + list(visited)
+    while (currentLevel and level<=k):
+        for v in currentLevel:
+            visited.add(v)
+        nextLevel = set()
+        levelGraph = {v:set() for v in currentLevel}
+        for v in currentLevel:
+            for w in G[v]:
+                if w not in visited:
+                    levelGraph[v].add(w)
+                    nextLevel.add(w)
+        # yield levelGraph
+        nodelist = nodelist + list(levelGraph)
         level = level + 1
-        if level == k:
+        if level==k:
             break
-        currentLevel = queue
+        currentLevel = nextLevel
     return nodelist
 
 #Tree generator

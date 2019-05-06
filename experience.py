@@ -4,7 +4,6 @@ from LexBFS import LexBFS
 # from BFS import BreadthFirstKLevels
 from AdjacencySort import sortadjacencylist
 import matplotlib.pyplot as plt
-import collections
 
 #Tree generator
 def _tree_edges(n,r):
@@ -37,42 +36,27 @@ def sortlistwithmap(mapping, L):
     return sortedlist
 
 def BreadthFirstKLevels(G,root,k):
-    # visited = set()
-    # currentLevel = [root]
-    # level = 0
-    # nodelist = []
-    # while (currentLevel):
-    #     for v in currentLevel:
-    #         visited.add(v)
-    #     nextLevel = set()
-    #     levelGraph = {v:set() for v in currentLevel}
-    #     for v in currentLevel:
-    #         for w in G[v]:
-    #             if w not in visited:
-    #                 levelGraph[v].add(w)
-    #                 nextLevel.add(w)
-    #     # yield levelGraph
-    #     # print levelGraph.keys()
-    #     nodelist = nodelist + list(levelGraph)
-    #     level = level + 1
-    #     if level>k:
-    #         break
-    #     currentLevel = nextLevel
+    visited = set()
+    currentLevel = [root]
     level = 0
     nodelist = []
-    visited, queue = set(), collections.deque([root])
-    while (queue):
-        vertex = queue.popleft()
-        for neighbour in G[vertex]:
-            if neighbour not in visited:
-                visited.add(neighbour)
-                queue.append(neighbour)
-        # yield visited
-        nodelist = nodelist + list(visited)
+    while (currentLevel):
+        for v in currentLevel:
+            visited.add(v)
+        nextLevel = set()
+        levelGraph = {v:set() for v in currentLevel}
+        for v in currentLevel:
+            for w in G[v]:
+                if w not in visited:
+                    levelGraph[v].add(w)
+                    nextLevel.add(w)
+        # yield levelGraph
+        # print levelGraph.keys()
+        nodelist = nodelist + list(levelGraph)
         level = level + 1
-        if level > k:
+        if level>k:
             break
-        currentLevel = queue
+        currentLevel = nextLevel
     return nodelist
 
 def induced_matching(G):
@@ -141,13 +125,14 @@ def distancekmatching(G, k):
     print(complex)
     return M
 # generate the tree graph
-n = 10
-G = nx.empty_graph(n)
-G.add_edges_from(list(_tree_edges(n,3)))
+# n = 1000
+# G = nx.empty_graph(n)
+# G.add_edges_from(list(_tree_edges(n,3)))
 
-# G = nx.balanced_tree(3,7)
 
-G = nx.random_powerlaw_tree(n=4000, gamma=3, seed=None, tries=1000000)
+G = nx.balanced_tree(3, 7)
+
+# G = nx.random_powerlaw_tree(n=10000, gamma=3, seed=None, tries=1000000)
 
 # G = nx.degree_sequence_tree([1,2,3,4,1,1,1,1])
 
@@ -175,5 +160,6 @@ for edge in DkM:
 colors = [G[u][v]['color'] for u,v in edges]
 nx.draw_networkx(G, pos=nx.spring_layout(G), edges=edges, edge_color=colors, node_size=10)
  # with_labels = True)
-plt.savefig("Tree_100_3.png", format="PNG")
-print(sigma)
+# plt.savefig("Tree_100_3.png", format="PNG")
+plt.savefig("Balanced_Tree_2_5.png", format="PNG")
+# print(sigma)
