@@ -125,12 +125,12 @@ def distancekmatching(G, k):
     print(complex)
     return M
 # generate the tree graph
-# n = 1000
-# G = nx.empty_graph(n)
-# G.add_edges_from(list(_tree_edges(n,3)))
+n = 3000
+G = nx.empty_graph(n)
+G.add_edges_from(list(_tree_edges(n,3)))
 
 
-G = nx.balanced_tree(3, 7)
+# G = nx.balanced_tree(3,6)
 
 # G = nx.random_powerlaw_tree(n=10000, gamma=3, seed=None, tries=1000000)
 
