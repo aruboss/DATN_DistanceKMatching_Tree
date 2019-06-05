@@ -38,6 +38,7 @@ def sortlistwithmap(mapping, L):
 def induced_matching(G):
     sigma = LexBFS(G)
     visited = [False]*len(G.nodes)
+    print(len(visited))
     M = []
     sigmamapping = makedictionary(sigma)
     adjacencylist = sortadjacencylist(sigma, G)
@@ -64,7 +65,7 @@ def induced_matching(G):
     return M
 def distancekmatching(G, k):
     sigma = LexBFS(G)
-    visited = [False]*len(G.nodes)
+    visited = [False]*len(G.nodes())
     M = []
     sigmamapping = makedictionary(sigma)
     adjacencylist = sortadjacencylist(sigma, G)
@@ -88,3 +89,14 @@ def distancekmatching(G, k):
                 G.remove_nodes_from(Nkv)
                 G.remove_nodes_from(Nku)
     return M
+
+
+# generate the tree graph
+n = 1000
+G = nx.empty_graph(n)
+G.add_edges_from(list(_tree_edges(n, 4)))
+H = G.copy()
+nx.write_adjlist(G, "test.adjlist")
+IM = induced_matching(H)
+k = 3
+DkM = distancekmatching(H, k)

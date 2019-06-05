@@ -4,7 +4,6 @@ Breadth First Search. See also LexBFS.py.
 
 D. Eppstein, May 2007.
 """
-import collections
 import networkx as nx
 def BreadthFirstLevels(G,root):
     """

@@ -1,7 +1,6 @@
 import time
 import networkx as nx
 from LexBFS import LexBFS
-# from BFS import BreadthFirstKLevels
 from AdjacencySort import sortadjacencylist
 import matplotlib.pyplot as plt
 
@@ -51,7 +50,6 @@ def BreadthFirstKLevels(G,root,k):
                     levelGraph[v].add(w)
                     nextLevel.add(w)
         # yield levelGraph
-        # print levelGraph.keys()
         nodelist = nodelist + list(levelGraph)
         level = level + 1
         if level>k:
@@ -65,7 +63,6 @@ def induced_matching(G):
     M = []
     sigmamapping = makedictionary(sigma)
     adjacencylist = sortadjacencylist(sigma, G)
-    # print adjacencylist
     for u in sigma:
         if visited[u]:
             continue
@@ -89,7 +86,6 @@ def induced_matching(G):
     return M
 def distancekmatching(G, k):
     sigma = LexBFS(G)
-    # print sigma
     visited = [False]*len(G.nodes())
     M = []
     sigmamapping = makedictionary(sigma)
@@ -110,37 +106,37 @@ def distancekmatching(G, k):
                         visited[node] = True
                     for node in Nku:
                         visited[node] = True
-                    # visited[u] = True
-                    # visited[v] = True
-                    # G.remove_nodes_from(Nkv)
-                    # G.remove_node(v)
-                    # G.remove_nodes_from(Nku)
-
-                    # print "::::::::::::::::::::::::::::::----------------"
-                    # print str((u,v))
-                    # print str(G.edges)
-                    # # print visited
-                    # print "::::::::::::::::::::::::::::::-----------------"
+                    visited[u] = True
+                    visited[v] = True
+                    G.remove_nodes_from(Nkv)
+                    G.remove_nodes_from(Nku)
+                    # print ("::::::::::::::::::::::::::::::----------------")
+                    # print (str((u,v)))
+                    # print(M)
+                    # print (str(G.edges))
+                    # print (visited)
+                    # print ("::::::::::::::::::::::::::::::-----------------")
                     break
     print(complex)
     return M
 # generate the tree graph
-n = 3000
-G = nx.empty_graph(n)
-G.add_edges_from(list(_tree_edges(n,3)))
+# n = 4000
+# G = nx.empty_graph(n)
+# G.add_edges_from(list(_tree_edges(n,3)))
 
 
-# G = nx.balanced_tree(3,6)
+# G = nx.balanced_tree(2,5)
 
-# G = nx.random_powerlaw_tree(n=10000, gamma=3, seed=None, tries=1000000)
+G = nx.random_powerlaw_tree(n=7, gamma=3, seed=None, tries=1000000)
 
-# G = nx.degree_sequence_tree([1,2,3,4,1,1,1,1])
 
 H = G.copy()
 nx.write_adjlist(G,"test.adjlist")
 start_time = time.time()
 # IM = induced_matching(H)
-k=3
+# print(str(len(G.nodes()))+"---"+str(len(G.edges()))+"---" +
+#       str(len(IM))+"--- %s seconds ---" % (time.time() - start_time))
+k=2
 DkM = distancekmatching(H, k)
 print(str(len(G.nodes()))+"---"+str(len(G.edges()))+"---"+str(len(DkM))+"--- %s seconds ---" % (time.time() - start_time))
 Try = BreadthFirstKLevels(G,0,k-1)
@@ -155,11 +151,10 @@ sigma = LexBFS(G)
 edges = G.edges()
 for u,v in edges:
     G[u][v]['color']='black'
+# for edge in IM:
 for edge in DkM:
     G[edge[0]][edge[1]]['color']='red'
 colors = [G[u][v]['color'] for u,v in edges]
-nx.draw_networkx(G, pos=nx.spring_layout(G), edges=edges, edge_color=colors, node_size=10)
- # with_labels = True)
-# plt.savefig("Tree_100_3.png", format="PNG")
-plt.savefig("Balanced_Tree_2_5.png", format="PNG")
+nx.draw_networkx(G, pos=nx.spring_layout(G), edges=edges, edge_color=colors, node_size=10, with_labels = True)
+plt.savefig("Test_Tree.png", format="PNG")
 # print(sigma)

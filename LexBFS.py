@@ -1,3 +1,9 @@
+"""LexBFS.py
+
+Lexicographic breadth-first-search
+
+D. Eppstein, November 2003.
+"""
 import networkx as nx
 from Sequence import Sequence
 from Util import arbitrary_item
